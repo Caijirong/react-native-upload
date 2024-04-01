@@ -2,6 +2,9 @@
 
 set -e
 
+pack_scheme=$1
+pack_configuration=$2
+
 # Archive
 # The same as `Xcode -> Product -> Archive`
 archive_path=./ios/build/archive.xcarchive
@@ -20,15 +23,16 @@ if [ -n "$workspace" ]
 then
   echo "Find workspace: $workspace"
   project_name=$(echo $workspace | cut -d. -f1)
+  [ -z "$pack_scheme" ] && pack_scheme=$project_name
 
   xcodebuild clean \
     -workspace "./ios/$workspace" \
-    -scheme "$project_name"
+    -scheme "$pack_scheme"
 
   xcodebuild archive \
     -workspace "./ios/$workspace" \
-    -scheme "$project_name" \
-    -configuration "Release" \
+    -scheme "$pack_scheme" \
+    -configuration "$pack_configuration" \
     -archivePath "$archive_path" \
     -allowProvisioningUpdates \
     -showBuildTimingSummary
@@ -36,15 +40,16 @@ elif [ -n "$project" ]
 then
   echo "Find xcodeproj: $project"
   project_name=$(echo $project | cut -d. -f1)
+  [ -z "$pack_scheme" ] && pack_scheme=$project_name
 
   xcodebuild clean \
     -project "./ios/$project" \
-    -scheme ${project_name}
+    -scheme "$pack_scheme"
 
   xcodebuild archive \
     -project "./ios/$project" \
-    -scheme "$project_name" \
-    -configuration "Release" \
+    -scheme "$pack_scheme" \
+    -configuration "$pack_configuration" \
     -archivePath "$archive_path" \
     -allowProvisioningUpdates \
     -showBuildTimingSummary

@@ -43,10 +43,11 @@ then
   sleep 1
 else
   ios_app_save_dir=./ios/build/app-$(date +%Y-%m-%d-%H-%M-%S)
-
+  pack_scheme=$(node $libs/pack-scheme.js "$@")
+  pack_configuration=$(node $libs/pack-config.js "$@")
   echo -e "\n\033[32m[$log_prefix] Building ios app...\033[0m\n"
 
-  bash $libs/archive.sh
+  bash $libs/archive.sh $pack_scheme $pack_configuration
   bash $libs/export-ipa.sh $ios_export_plist  $ios_app_save_dir
 fi
 
