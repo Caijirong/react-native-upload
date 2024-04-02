@@ -4,3 +4,5 @@ node_modules/
 build/
 src/iconfont
 ./iconfont.json
+publish.sh
+.npmrc
