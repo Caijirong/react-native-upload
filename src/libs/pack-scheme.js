@@ -4,7 +4,7 @@ const args = minimist(process.argv.slice(2));
 let packScheme = args.scheme;
 
 if (!packScheme || typeof packScheme !== 'string') {
-    packScheme = '';
+    packScheme = 'Nil';
 }
 
 console.log(packScheme);

@@ -23,7 +23,11 @@ if [ -n "$workspace" ]
 then
   echo "Find workspace: $workspace"
   project_name=$(echo $workspace | cut -d. -f1)
-  [ -z "$pack_scheme" ] && pack_scheme=$project_name
+  # 如果pack_scheme等于Nil，那么就用project_name
+  if [ "$pack_scheme" == "Nil" ]
+  then
+    pack_scheme=$project_name
+  fi
 
   xcodebuild clean \
     -workspace "./ios/$workspace" \
@@ -40,7 +44,11 @@ elif [ -n "$project" ]
 then
   echo "Find xcodeproj: $project"
   project_name=$(echo $project | cut -d. -f1)
-  [ -z "$pack_scheme" ] && pack_scheme=$project_name
+  # 如果pack_scheme等于Nil，那么就用project_name
+  if [ "$pack_scheme" == "Nil" ]
+  then
+    pack_scheme=$project_name
+  fi
 
   xcodebuild clean \
     -project "./ios/$project" \
